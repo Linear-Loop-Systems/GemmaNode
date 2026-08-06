@@ -1,0 +1,51 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Environment / secrets
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# Node (for dashboard/website)
+node_modules/
+npm-debug.log*
+dist/
+build/
+
+# Docker
+*.log
+
+# Model weights / large local files
+*.gguf
+*.bin
+*.safetensors
+models/
+weights/
+
+# Screenshots / live-view captures
+screenshots/
+*.png
+*.jpg
+!docs/**/*.png
+!docs/**/*.jpg
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Local task/handoff artifacts
+HANDOFF_CLAUDE.txt
+task_logs/
