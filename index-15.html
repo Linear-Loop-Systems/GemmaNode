@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemmaNode — AI Compute Orchestration Network</title>
+<meta name="description" content="GemmaNode is an open-source AI compute orchestration network that coordinates AI models, autonomous agents, local hardware, cloud compute, and external AI providers through one unified layer.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="GemmaNode — AI Compute Orchestration Network">
+<meta property="og:description" content="One orchestrator. Multiple AI models, agents, and compute resources. Open-source, provider-independent, user-controlled.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0f;
+    --bg2:#0f0f18;
+    --pink:#ff2ea6;
+    --blue:#2ee6ff;
+    --green:#2eff9d;
+    --orange:#ff9d2e;
+    --text:#e8e8f0;
+    --muted:#8b8b9e;
+    --card:#12121c;
+    --card2:#161622;
+    --border:rgba(255,255,255,0.08);
+    --border-strong:rgba(255,255,255,0.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;}
+  code, .mono{font-family:'JetBrains Mono',monospace;}
+  a{text-decoration:none;color:inherit;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--blue);color:#0a0a0f;padding:10px 18px;border-radius:0 0 8px 0;font-weight:600;z-index:999;}
+  .skip-link:focus{left:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  }
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;flex-wrap:wrap;gap:14px;position:sticky;top:0;z-index:50;background:rgba(10,10,15,0.75);backdrop-filter:blur(10px);border-bottom:1px solid transparent;}
+  nav.scrolled{border-bottom:1px solid var(--border);}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;
+    background:linear-gradient(90deg,var(--pink),var(--blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .nav-links{display:flex;flex-wrap:wrap;align-items:center;}
+  .nav-link{color:var(--muted);font-size:0.88rem;margin-left:24px;transition:color .2s;white-space:nowrap;}
+  .nav-link:hover{color:var(--text);}
+  .nav-cta{margin-left:24px;padding:9px 18px;border-radius:8px;border:1px solid var(--border-strong);font-size:0.85rem;font-weight:600;transition:all .2s;}
+  .nav-cta:hover{border-color:var(--blue);box-shadow:0 0 14px rgba(46,230,255,0.25);}
+
+  .hero{text-align:center;padding:90px 24px 76px;position:relative;}
+  .hero::before{
+    content:"";position:absolute;top:6%;left:50%;transform:translateX(-50%);
+    width:650px;height:650px;
+    background:radial-gradient(circle, rgba(255,46,166,0.14), transparent 70%);
+    filter:blur(40px);z-index:-1;
+  }
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--border);
+    border-radius:999px;font-size:0.8rem;color:var(--blue);margin-bottom:24px;
+    background:rgba(46,230,255,0.05);}
+  .hero h1{font-size:clamp(2.3rem,5.6vw,4rem);font-weight:700;line-height:1.12;
+    color:#fff;
+    margin-bottom:20px;}
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--pink),var(--blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{color:var(--muted);font-size:1.12rem;max-width:600px;margin:0 auto 40px;line-height:1.6;}
+  .btn-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    padding:14px 32px;border-radius:10px;font-weight:600;font-size:0.95rem;
+    display:inline-block;transition:all .25s ease;border:1px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg,var(--pink),var(--blue));
+    color:#0a0a0f;box-shadow:0 0 20px rgba(255,46,166,0.3),0 0 20px rgba(46,230,255,0.2);
+  }
+  .btn-primary:hover{box-shadow:0 0 34px rgba(255,46,166,0.55),0 0 34px rgba(46,230,255,0.4);transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--blue);box-shadow:0 0 16px rgba(46,230,255,0.25);}
+
+  /* hero strip stats */
+  .hero-strip{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;margin-top:56px;color:var(--muted);font-size:0.82rem;}
+  .hero-strip div{display:flex;align-items:center;gap:8px;}
+  .hero-strip .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);}
+
+  section{padding:76px 0;}
+  .eyebrow{color:var(--pink);font-size:0.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:block;text-align:center;}
+  .section-title{text-align:center;margin-bottom:48px;}
+  .section-title h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:12px;}
+  .section-title p{color:var(--muted);font-size:1rem;max-width:620px;margin:0 auto;line-height:1.6;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;}
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:16px;
+    padding:28px;transition:all .3s ease;position:relative;overflow:hidden;
+    opacity:0;transform:translateY(16px);animation:fadeIn .6s ease forwards;
+  }
+  .card:nth-child(1){animation-delay:.05s;}
+  .card:nth-child(2){animation-delay:.15s;}
+  .card:nth-child(3){animation-delay:.25s;}
+  .card:nth-child(4){animation-delay:.35s;}
+  .card:nth-child(5){animation-delay:.45s;}
+  @keyframes fadeIn{to{opacity:1;transform:translateY(0);}}
+  .card:hover{
+    border-color:rgba(255,46,166,0.4);
+    box-shadow:0 0 30px rgba(255,46,166,0.12), 0 0 30px rgba(46,230,255,0.08);
+    transform:translateY(-4px);
+  }
+  .card .icon{
+    width:44px;height:44px;border-radius:10px;margin-bottom:16px;
+    background:linear-gradient(135deg,var(--pink),var(--blue));
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  }
+  .card h3{font-size:1.1rem;margin-bottom:8px;}
+  .card p{color:var(--muted);font-size:0.9rem;line-height:1.55;}
+  .card ul{margin-top:12px;padding-left:0;list-style:none;}
+  .card ul li{color:var(--muted);font-size:0.84rem;padding:4px 0 4px 16px;position:relative;line-height:1.4;}
+  .card ul li::before{content:"›";position:absolute;left:0;color:var(--blue);}
+  .card .tag{display:inline-block;margin-top:14px;padding:3px 10px;border-radius:999px;font-size:0.7rem;font-weight:600;letter-spacing:.02em;}
+  .tag-local{background:rgba(46,230,255,0.1);color:var(--blue);}
+  .tag-cloud{background:rgba(46,255,157,0.1);color:var(--green);}
+  .tag-provider{background:rgba(255,46,166,0.1);color:var(--pink);}
+  .tag-agent{background:rgba(255,157,46,0.1);color:var(--orange);}
+  .tag-escalation{background:rgba(255,255,255,0.08);color:var(--text);}
+
+  .features{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;
+    background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .feat{background:var(--bg2);padding:26px;transition:background .25s;}
+  .feat:hover{background:var(--card);}
+  .feat h3{font-size:1rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .feat h3::before{content:"◆";color:var(--pink);font-size:0.7rem;}
+  .feat p{color:var(--muted);font-size:0.85rem;line-height:1.5;}
+
+  /* ---- How it works: numbered step flow ---- */
+  .steps{display:flex;flex-direction:column;gap:0;max-width:720px;margin:0 auto;}
+  .step{display:flex;gap:22px;padding:22px 0;position:relative;}
+  .step:not(:last-child)::before{
+    content:"";position:absolute;left:23px;top:56px;bottom:-6px;width:1px;
+    background:linear-gradient(var(--border-strong),transparent);
+  }
+  .step-num{
+    flex:none;width:48px;height:48px;border-radius:50%;
+    background:var(--card2);border:1px solid var(--border-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--blue);
+  }
+  .step-body h3{font-size:1.02rem;margin-bottom:6px;}
+  .step-body p{color:var(--muted);font-size:0.9rem;line-height:1.55;}
+
+  /* ---- Architecture flow diagram ---- */
+  .flow-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:44px 28px;position:relative;}
+  .flow{display:flex;flex-direction:column;align-items:center;gap:0;}
+  .flow-node{
+    width:100%;max-width:420px;background:var(--card2);border:1px solid var(--border-strong);
+    border-radius:12px;padding:16px 20px;text-align:center;position:relative;z-index:2;
+  }
+  .flow-node.accent{border-color:rgba(46,230,255,0.5);box-shadow:0 0 22px rgba(46,230,255,0.12);}
+  .flow-node.pink{border-color:rgba(255,46,166,0.5);box-shadow:0 0 22px rgba(255,46,166,0.12);}
+  .flow-node h4{font-size:0.95rem;font-weight:600;margin-bottom:3px;}
+  .flow-node span{color:var(--muted);font-size:0.78rem;}
+  .flow-arrow{color:var(--border-strong);font-size:1.4rem;line-height:1;padding:6px 0;}
+  .flow-pool{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;
+    width:100%;max-width:640px;margin:4px 0;
+  }
+  .flow-pool .flow-node{max-width:none;padding:12px 14px;}
+  .flow-pool .flow-node h4{font-size:0.82rem;}
+  .flow-pool .flow-node span{font-size:0.72rem;}
+  .flow-branch{
+    display:flex;gap:18px;align-items:stretch;width:100%;max-width:640px;justify-content:center;flex-wrap:wrap;
+  }
+  .flow-branch .flow-col{flex:1;min-width:260px;display:flex;flex-direction:column;align-items:center;}
+  .escalation-note{
+    margin-top:18px;padding:14px 18px;border:1px dashed var(--border-strong);border-radius:10px;
+    color:var(--muted);font-size:0.82rem;text-align:center;max-width:480px;
+  }
+  .escalation-note b{color:var(--orange);}
+
+  /* ---- Status section ---- */
+  .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
+  .status-col{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;}
+  .status-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .status-dot{width:10px;height:10px;border-radius:50%;}
+  .dot-current{background:var(--green);box-shadow:0 0 8px var(--green);}
+  .dot-experimental{background:var(--orange);box-shadow:0 0 8px var(--orange);}
+  .dot-planned{background:var(--muted);}
+  .status-head h3{font-size:1rem;}
+  .status-col ul{list-style:none;}
+  .status-col li{color:var(--muted);font-size:0.86rem;padding:7px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+  .status-col li:last-child{border-bottom:none;}
+
+  /* ---- Get started ---- */
+  .get-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:40px;}
+  .get-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;text-align:center;transition:all .25s;}
+  .get-card:hover{border-color:var(--border-strong);transform:translateY(-3px);}
+  .get-card .icon{width:44px;height:44px;margin:0 auto 14px;border-radius:10px;
+    background:linear-gradient(135deg,var(--pink),var(--blue));display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+  .get-card h3{font-size:1rem;margin-bottom:6px;}
+  .get-card p{color:var(--muted);font-size:0.84rem;margin-bottom:16px;line-height:1.5;}
+  .get-card a.btn{padding:9px 20px;font-size:0.84rem;}
+
+  .req-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:30px;}
+  .req-box h3{font-size:1rem;margin-bottom:16px;}
+  .req-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+  .req-list li{color:var(--muted);font-size:0.86rem;padding-left:18px;position:relative;line-height:1.4;}
+  .req-list li::before{content:"—";position:absolute;left:0;color:var(--blue);}
+
+  .note-box{
+    background:rgba(46,230,255,0.04);border:1px solid rgba(46,230,255,0.25);border-radius:14px;
+    padding:18px 22px;font-size:0.86rem;color:var(--muted);line-height:1.6;margin-top:32px;
+  }
+  .note-box b{color:var(--text);}
+
+  footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border);}
+  footer .foot-links{display:flex;gap:24px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+  footer .foot-links a{color:var(--muted);font-size:0.9rem;transition:color .2s;}
+  footer .foot-links a:hover{color:var(--blue);}
+  footer .credit{color:var(--muted);font-size:0.8rem;margin-bottom:6px;}
+  footer .credit span{color:var(--pink);}
+  footer .disclosure{color:var(--muted);opacity:.65;font-size:0.74rem;max-width:560px;margin:14px auto 0;line-height:1.5;}
+
+  @media(max-width:700px){
+    .flow-branch{flex-direction:column;align-items:center;}
+  }
+  @media(max-width:600px){
+    nav{flex-direction:column;gap:12px;}
+    .nav-links{justify-content:center;}
+    .nav-link{margin:0 10px;}
+    .nav-cta{margin:8px 0 0;}
+    .btn-row{flex-direction:column;align-items:center;}
+    .hero-strip{gap:18px;}
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="wrap" id="site-nav">
+  <div class="logo">GemmaNode</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#architecture">Architecture</a>
+    <a class="nav-link" href="#resources">Resource pool</a>
+    <a class="nav-link" href="#privacy">Privacy</a>
+    <a class="nav-link" href="#status">Status</a>
+    <a class="nav-cta" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<section class="hero">
+  <div class="badge">open-source · multi-provider · user-controlled</div>
+  <h1>One orchestrator.<br>Multiple models, <span>agents &amp; resources.</span></h1>
+  <p>GemmaNode is an open-source AI compute orchestration network. It coordinates AI models, autonomous agents, local hardware, cloud compute, and external AI providers through a single, unified layer — without locking you into one model, one machine, or one provider.</p>
+  <div class="btn-row">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode" class="btn btn-primary">View on GitHub</a>
+    <a href="#how" class="btn btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-strip">
+    <div><span class="dot"></span>Provider-independent</div>
+    <div><span class="dot"></span>Local-first, cloud-optional</div>
+    <div><span class="dot"></span>Extensible by design</div>
+  </div>
+</section>
+
+<section id="how" class="wrap">
+  <span class="eyebrow">Workflow</span>
+  <div class="section-title">
+    <h2>How it works</h2>
+    <p>At a high level, a task moves through the same general path every time — the specific resource it lands on depends on what the task needs and what's available.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>You submit a task</h3>
+        <p>Through the web app, desktop client, mobile client, or API/CLI — one place to describe what you need done.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>GemmaNode analyzes the task</h3>
+        <p>The request is reviewed at a high level to understand its general nature — coding, research, generation, analysis, and so on.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Available resources are considered</h3>
+        <p>GemmaNode looks at what's currently available across the resource pool — local hardware, cloud compute, AI providers, and agent frameworks.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Work is assigned to a suitable resource</h3>
+        <p>Based on general factors like capability, availability, and cost. The exact selection logic is internal — this page describes what happens, not how it's computed.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Independent work can run concurrently</h3>
+        <p>When resources allow, multiple agents or parts of a task can execute in parallel rather than strictly one at a time.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Results come back to you</h3>
+        <p>Output is collected, consolidated, and returned through whichever client you started from.</p>
+      </div>
+    </div>
+  </div>
+  <div class="note-box">
+    <b>Difficult or uncertain tasks</b> can optionally be escalated for manual review by a stronger model rather than forced through an automated path that isn't working. This is a deliberate fallback, not the default route for routine work.
+  </div>
+</section>
+
+<section id="architecture" class="features">
+  <div class="wrap">
+    <span class="eyebrow">System design</span>
+    <div class="section-title">
+      <h2>Architecture overview</h2>
+      <p>The public shape of the system — how a request moves from you to a resource and back. Internal routing logic, scheduling heuristics, and infrastructure details are intentionally left out of this diagram.</p>
+    </div>
+
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-node accent"><h4>User</h4><span>Web app · Desktop · Mobile · API/CLI</span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node pink"><h4>GemmaNode Orchestrator</h4><span>Task analysis &amp; resource evaluation</span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node"><h4>Resource Pool</h4><span>Matched against available capacity</span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-pool">
+          <div class="flow-node"><h4>Local Compute</h4><span>Your hardware</span></div>
+          <div class="flow-node"><h4>Cloud Compute</h4><span>Remote capacity</span></div>
+          <div class="flow-node"><h4>AI Providers</h4><span>External models</span></div>
+          <div class="flow-node"><h4>Agents</h4><span>Multi-step execution</span></div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node accent"><h4>Execution</h4><span>Task carried out, results collected</span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node pink"><h4>Result → You</h4><span>Returned to your originating client</span></div>
+      </div>
+      <div class="escalation-note">
+        <b>Manual escalation:</b> complex, failing, or uncertain tasks can be routed to Claude for review — kept separate from the automated pool, not wired into every step by default.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources" class="wrap">
+  <span class="eyebrow">Capabilities</span>
+  <div class="section-title">
+    <h2>Resource pool</h2>
+    <p>GemmaNode works with a broad, extensible pool of resources. Availability, quotas, and pricing for any third-party resource are set by that provider and can change — nothing here is a permanent guarantee.</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>Local Compute</h3>
+      <p>Run workloads on your own hardware — private, low-latency execution when available.</p>
+      <ul><li>Your CPU / GPU / RAM</li></ul>
+      <span class="tag tag-local">Local</span>
+    </div>
+    <div class="card">
+      <div class="icon">☁️</div>
+      <h3>Cloud Compute</h3>
+      <p>Draw on compatible remote compute when extra capacity is useful, subject to each platform's own limits.</p>
+      <ul>
+        <li>Camber</li>
+        <li>Kaggle</li>
+        <li>Google Colab</li>
+        <li>Hugging Face</li>
+      </ul>
+      <span class="tag tag-cloud">Cloud</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔌</div>
+      <h3>AI Providers</h3>
+      <p>Use external AI APIs for suitable workloads, respecting each provider's own terms and quotas.</p>
+      <ul>
+        <li>Gemini API</li>
+        <li>OpenRouter</li>
+        <li>Pollinations AI</li>
+      </ul>
+      <span class="tag tag-provider">Provider</span>
+    </div>
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>Autonomous Agents</h3>
+      <p>Multi-step, tool-using execution for tasks that need more than a single model call.</p>
+      <ul>
+        <li>OpenHands</li>
+        <li>OpenClaw</li>
+        <li>Hermes</li>
+      </ul>
+      <span class="tag tag-agent">Agent</span>
+    </div>
+    <div class="card">
+      <div class="icon">🧭</div>
+      <h3>Manual Escalation</h3>
+      <p>Complex or uncertain tasks can optionally be escalated to a stronger model for human-reviewed handling.</p>
+      <ul><li>Claude</li></ul>
+      <span class="tag tag-escalation">Escalation</span>
+    </div>
+  </div>
+  <div class="note-box">
+    <b>Provider independence:</b> resources can be added, removed, or swapped in the pool without changing how you interact with GemmaNode. No single vendor is a hard dependency.
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <span class="eyebrow">Cost &amp; control</span>
+    <div class="section-title">
+      <h2>Built on free &amp; user-controlled resources</h2>
+      <p>GemmaNode is designed to make the most of free tiers, open-weight models, and your own hardware — not to promise unlimited free compute forever.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><h3>Free-tier aware</h3><p>Designed to make good use of free and low-cost resources, while respecting each provider's own limits and policies.</p></div>
+      <div class="feat"><h3>BYOK</h3><p>Bring your own keys where a provider requires one — nothing shared, nothing hardcoded.</p></div>
+      <div class="feat"><h3>No forced subscription</h3><p>The core, self-hosted experience isn't metered by GemmaNode itself.</p></div>
+      <div class="feat"><h3>Your hardware counts</h3><p>Local compute is a first-class resource, not an afterthought — useful even without a dedicated GPU.</p></div>
+      <div class="feat"><h3>Provider limits still apply</h3><p>Free tiers, quotas, and pricing are set by each provider and can change at any time.</p></div>
+      <div class="feat"><h3>No hidden metering</h3><p>You can see which resource handled a task — no silent switch to a paid tier without your setup allowing it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy" class="wrap">
+  <span class="eyebrow">Privacy &amp; control</span>
+  <div class="section-title">
+    <h2>Local by default, external when you choose</h2>
+    <p>What stays on your machine and what doesn't depends on which resource actually handles a task.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+    <div class="card">
+      <div class="icon">🔒</div>
+      <h3>Local resources</h3>
+      <p>When a task runs on your own hardware, your code and files can stay on your machine according to how you've configured GemmaNode.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>External providers</h3>
+      <p>When a task is sent to an external AI provider or cloud resource, the relevant data leaves your machine and is subject to that provider's own service and terms.</p>
+    </div>
+  </div>
+  <div class="note-box">
+    We don't promise privacy guarantees beyond what the actual configuration provides. If a task is routed externally, treat it the same way you would treat sending that data directly to that provider.
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <span class="eyebrow">For developers</span>
+    <div class="section-title">
+      <h2>Built to evolve with the AI ecosystem</h2>
+      <p>GemmaNode's provider and agent boundaries are designed to be swappable, not hardcoded.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><h3>New models</h3><p>Additional models can be added to the pool as they become useful.</p></div>
+      <div class="feat"><h3>New AI providers</h3><p>Providers beyond the current set can be integrated over time.</p></div>
+      <div class="feat"><h3>New compute resources</h3><p>Additional local or cloud compute sources can be supported.</p></div>
+      <div class="feat"><h3>New agent frameworks</h3><p>The agent layer isn't limited to what's currently listed.</p></div>
+      <div class="feat"><h3>Open source</h3><p>Fully inspectable code, free to fork, audit, and extend.</p></div>
+      <div class="feat"><h3>No black boxes</h3><p>What's public stays high-level by design — but nothing is hidden about how to contribute.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="status" class="wrap">
+  <span class="eyebrow">Transparency</span>
+  <div class="section-title">
+    <h2>Project status</h2>
+    <p>GemmaNode is under active development. This is an honest snapshot, not a roadmap promise.</p>
+  </div>
+  <div class="status-grid">
+    <div class="status-col">
+      <div class="status-head"><span class="status-dot dot-current"></span><h3>Current</h3></div>
+      <ul>
+        <li>Local orchestration on your own hardware</li>
+        <li>Coordination across multiple free/open AI models</li>
+        <li>BYOK-based provider configuration</li>
+        <li>Open-source codebase on GitHub</li>
+      </ul>
+    </div>
+    <div class="status-col">
+      <div class="status-head"><span class="status-dot dot-experimental"></span><h3>Experimental</h3></div>
+      <ul>
+        <li>Cloud/remote compute integrations</li>
+        <li>Autonomous agent framework support</li>
+        <li>Parallel multi-agent task execution</li>
+        <li>Remote wake / resume of queued tasks</li>
+      </ul>
+    </div>
+    <div class="status-col">
+      <div class="status-head"><span class="status-dot dot-planned"></span><h3>Planned</h3></div>
+      <ul>
+        <li>Broader provider &amp; agent marketplace</li>
+        <li>Packaged installer distribution</li>
+        <li>Expanded monitoring &amp; task history UI</li>
+        <li>Public documentation site</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="get-started">
+  <div class="wrap">
+    <span class="eyebrow">Get GemmaNode</span>
+    <div class="section-title">
+      <h2>Get GemmaNode</h2>
+      <p>GemmaNode is open-source. Get the code, read the docs, or grab the packaged installer once it's published.</p>
+    </div>
+    <div class="get-grid">
+      <div class="get-card">
+        <div class="icon">🪟</div>
+        <h3>Microsoft Store</h3>
+        <p>Primary installation option once published.</p>
+        <a class="btn btn-ghost" href="YOUR_STORE_URL">Coming soon</a>
+      </div>
+      <div class="get-card">
+        <div class="icon">🐙</div>
+        <h3>GitHub</h3>
+        <p>Source code, issues, and releases.</p>
+        <a class="btn btn-ghost" href="https://github.com/Linear-Loop-Systems/GemmaNode">View repo</a>
+      </div>
+      <div class="get-card">
+        <div class="icon">📘</div>
+        <h3>Documentation</h3>
+        <p>Setup, configuration, and provider guides.</p>
+        <a class="btn btn-ghost" href="YOUR_DOCS_URL">Read docs</a>
+      </div>
+    </div>
+    <div class="req-box">
+      <h3>Requirements</h3>
+      <ul class="req-list">
+        <li>Windows (primary supported OS)</li>
+        <li>Dedicated GPU optional — CPU inference supported</li>
+        <li>Local model runtime (e.g. Ollama) for on-device models</li>
+        <li>Internet connection for any external provider or cloud resource</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+
+<script>
+  // Sticky nav shadow on scroll
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  // Reveal cards/sections on scroll (progressive, respects reduced motion)
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animationPlayState = 'running';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.card').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      io.observe(el);
+    });
+  }
+</script>
+
+</body>
+</html>
