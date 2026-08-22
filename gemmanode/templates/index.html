@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GemmaNode Resource Manager</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main>
+    <h1>GemmaNode Resource Manager</h1>
+    <p>Configure providers, test connections, and control resource availability.</p>
+    <section id="resources" class="grid"></section>
+  </main>
+
+  <script>
+    const resourcesNode = document.getElementById('resources');
+
+    async function fetchResources() {
+      const data = await fetch('/api/resources').then(r => r.json());
+      renderResources(data);
+    }
+
+    function statusDot(status) {
+      const online = ['Connected', 'Available'];
+      return `<span class="dot ${online.includes(status) ? 'on' : 'off'}"></span>`;
+    }
+
+    function renderResources(resources) {
+      resourcesNode.innerHTML = resources.map(resource => `
+        <article class="card">
+          <h2>${resource.name}</h2>
+          <p class="meta">${resource.type}</p>
+          <p>${statusDot(resource.status)} ${resource.status}</p>
+          <p class="stage">${resource.stage}</p>
+          <p class="capabilities">Capabilities: ${resource.capabilities.join(', ') || 'None'}</p>
+          <div class="actions">
+            <button onclick="configureResource('${resource.id}')">Configure</button>
+            <button onclick="testResource('${resource.id}')">Test</button>
+            <button onclick="toggleResource('${resource.id}', ${!resource.enabled})">${resource.enabled ? 'Disable' : 'Enable'}</button>
+            <button onclick="clearCredentials('${resource.id}')">Remove Credentials</button>
+          </div>
+          <p class="error">${resource.error_state || ''}</p>
+        </article>
+      `).join('');
+    }
+
+    async function configureResource(id) {
+      const apiKey = prompt('Enter API key (leave empty if not required):');
+      const model = prompt('Optional model setting (OpenRouter etc.):');
+      const payload = {
+        configuration: model ? { model } : {},
+        secrets: apiKey ? { api_key: apiKey } : {}
+      };
+      const response = await fetch(`/api/resources/${id}/configure`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) alert((await response.json()).error || 'Configuration failed');
+      fetchResources();
+    }
+
+    async function testResource(id) {
+      await fetch(`/api/resources/${id}/test`, { method: 'POST' });
+      fetchResources();
+    }
+
+    async function toggleResource(id, enabled) {
+      await fetch(`/api/resources/${id}/enable`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled })
+      });
+      fetchResources();
+    }
+
+    async function clearCredentials(id) {
+      await fetch(`/api/resources/${id}/credentials`, { method: 'DELETE' });
+      fetchResources();
+    }
+
+    fetchResources();
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+:root { color-scheme: dark; }
+body { font-family: Arial, sans-serif; margin: 0; background: #0f1221; color: #f6f7ff; }
+main { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { border: 1px solid #3a3f62; border-radius: 12px; padding: 1rem; background: #1b2040; }
+.meta, .stage { color: #b6bce0; margin: 0.2rem 0; }
+.actions { display: grid; gap: 0.4rem; margin-top: 0.6rem; }
+button { background: #3440a8; border: none; color: #fff; padding: 0.45rem; border-radius: 8px; cursor: pointer; }
+button:hover { background: #4150d1; }
+.dot { display:inline-block; width:0.6rem; height:0.6rem; border-radius:50%; margin-right:0.3rem; }
+.dot.on { background:#22c55e; }
+.dot.off { background:#f59e0b; }
+.error { color: #ff9898; min-height: 1.2em; }
+.capabilities { color: #cfd4f4; font-size: 0.9rem; }
+@media (max-width: 600px) {
+  main { padding: 0.8rem; }
+  .card { padding: 0.8rem; }
+}
