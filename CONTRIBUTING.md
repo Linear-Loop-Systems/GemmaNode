@@ -1,8 +1,8 @@
 # Contributing
 
-GemmaNode is currently in the **Bootstrap stage** — the core loop (local supervisor, polling client, model routing, handoff pipeline) is still being built manually and isn't stable yet.
+GemmaNode is early-stage and still under active development. The core system isn't stable yet, so the project isn't set up for external contributions in a structured way just yet.
 
-**Not accepting PRs at this time.** Once the Bootstrap stage is complete and the automated Self-Build loop is validated, this file will be updated with contribution guidelines.
+**Not accepting PRs at this time.** Once the foundation is stable and validated, this file will be updated with proper contribution guidelines.
 
 Until then:
 - Feel free to open an issue for bugs, questions, or ideas
