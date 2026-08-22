@@ -148,7 +148,7 @@ class OpenRouterProviderAdapter(StaticProviderAdapter):
             return ConnectionTestResult(False, "OpenRouter API key is missing.", ConnectionStatus.NOT_CONFIGURED)
 
         request = Request("https://openrouter.ai/api/v1/models")
-        request.add_header("Authorization", f"******")
+        request.add_header("Authorization", "Bearer " + api_key)
         request.add_header("Accept", "application/json")
 
         try:

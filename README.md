@@ -74,6 +74,82 @@ GemmaNode is under active development. This is an honest snapshot, not a roadmap
 - Expanded monitoring & task history UI
 - Public documentation site
 
+## Resource Manager (vertical slice)
+
+This repository now includes a first working GemmaNode Resource Manager implementation in Python/Flask.
+
+### What it does
+
+- Shows all configured GemmaNode resource types in a responsive UI (desktop + mobile)
+- Enables/disables resources
+- Configures provider settings
+- Stores provider secrets via OS-backed keyring APIs (no plaintext app storage fallback)
+- Tests provider connections where implemented
+- Clears saved credentials/configuration
+- Exposes orchestration primitives (`TaskRequirements`, `ResourceSelector`, `ExecutionProvider`, `Orchestrator`)
+
+### Integration status
+
+| Resource | Category | Status | Stage |
+|---|---|---|---|
+| Local PC | Local Compute | Available | Available |
+| Gemini API | AI Provider | API key configure + secure save + live connection test | Available |
+| OpenRouter | AI Provider | API key configure + secure save + live connection test + optional model validation | Available |
+| Pollinations AI | AI Provider | Provider boundary + UI/config state | Experimental |
+| Kaggle | Cloud Compute | Provider boundary + UI/config state | Experimental |
+| Google Colab | Cloud Compute | Provider boundary + UI/config state | Experimental |
+| Hugging Face | Cloud Compute | Provider boundary + UI/config state | Requires configuration |
+| Camber | Cloud Compute | Provider boundary + UI/config state | Planned |
+| OpenHands | Agent Framework | Agent resource abstraction boundary | Experimental |
+| OpenClaw | Agent Framework | Agent resource abstraction boundary | Planned |
+| Hermes | Agent Framework | Agent resource abstraction boundary | Planned |
+| Claude | Manual Escalation | Manual escalation routing target abstraction | Available |
+
+> Integrations marked experimental/planned are intentionally not reported as connected unless a real implementation exists.
+
+### Run
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
+python -m gemmanode.app
+```
+
+Open `http://localhost:8080`.
+
+### Configure Gemini
+
+1. Open Resource Manager.
+2. On **Gemini**, click **Configure**.
+3. Enter your Gemini API key.
+4. Save, then click **Test**.
+5. Status becomes **Connected** on success, or a user-safe failure message on error.
+6. Use **Remove Credentials** to clear saved key/configuration.
+
+### Configure OpenRouter
+
+1. Open Resource Manager.
+2. On **OpenRouter**, click **Configure**.
+3. Enter your OpenRouter API key.
+4. (Optional) Set a model id.
+5. Click **Test** to validate key/network and optional model availability for that account.
+6. Use **Remove Credentials** to clear saved key/configuration.
+
+### Credential protection
+
+- Secrets are stored via the system keyring backend through Python `keyring`.
+- API keys are never returned by API responses.
+- Connection errors are sanitized for users and do not print secrets.
+- No keys are hardcoded or committed.
+
+### Add another provider
+
+1. Add a provider adapter in `gemmanode/providers.py`.
+2. Define `make_resource`, `required_secrets`, and `test_connection`.
+3. Register the adapter in `default_adapters()`.
+4. Add tests for configuration, connection behavior, and selection/orchestration eligibility.
+
 ## Requirements
 
 - A supported OS (Windows primary; see docs for other platforms as they're added)

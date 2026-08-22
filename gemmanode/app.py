@@ -32,8 +32,8 @@ def create_app() -> Flask:
         enabled = bool(payload.get("enabled", True))
         try:
             resource = manager.set_enabled(resource_id, enabled)
-        except ResourceNotFoundError as exc:
-            return jsonify({"error": str(exc)}), 404
+        except ResourceNotFoundError:
+            return jsonify({"error": "Resource not found."}), 404
         return jsonify(resource.to_dict())
 
     @app.post("/api/resources/<resource_id>/configure")
@@ -43,24 +43,26 @@ def create_app() -> Flask:
         secrets = payload.get("secrets") or {}
         try:
             resource = manager.configure_resource(resource_id, configuration=configuration, secrets=secrets)
-        except (ResourceNotFoundError, InvalidConfigurationError) as exc:
-            return jsonify({"error": str(exc)}), 400
+        except ResourceNotFoundError:
+            return jsonify({"error": "Resource not found."}), 404
+        except InvalidConfigurationError:
+            return jsonify({"error": "Configuration failed. Check required settings and secure storage availability."}), 400
         return jsonify(resource.to_dict())
 
     @app.post("/api/resources/<resource_id>/test")
     def test_resource(resource_id: str) -> Any:
         try:
             resource = manager.test_connection(resource_id)
-        except ResourceNotFoundError as exc:
-            return jsonify({"error": str(exc)}), 404
+        except ResourceNotFoundError:
+            return jsonify({"error": "Resource not found."}), 404
         return jsonify(resource.to_dict())
 
     @app.delete("/api/resources/<resource_id>/credentials")
     def clear_resource_credentials(resource_id: str) -> Any:
         try:
             resource = manager.remove_credentials(resource_id)
-        except ResourceNotFoundError as exc:
-            return jsonify({"error": str(exc)}), 404
+        except ResourceNotFoundError:
+            return jsonify({"error": "Resource not found."}), 404
         return jsonify(resource.to_dict())
 
     @app.post("/api/orchestrate")
@@ -71,8 +73,8 @@ def create_app() -> Flask:
         try:
             result = orchestrator.submit_task(task, requirements, manager.list_resources())
             return jsonify(result.__dict__)
-        except NoEligibleResourceError as exc:
-            return jsonify({"success": False, "message": str(exc)}), 400
+        except NoEligibleResourceError:
+            return jsonify({"success": False, "message": "No eligible resource is available for this task."}), 400
 
     return app
 
