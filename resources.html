@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemmaNode Resource Pool</title>
+<meta name="description" content="Local compute, cloud compute, AI providers, and agent frameworks GemmaNode can coordinate.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="GemmaNode Resource Pool">
+<meta property="og:description" content="Local compute, cloud compute, AI providers, and agent frameworks GemmaNode can coordinate.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="wrap" id="site-nav">
+  <a class="logo" href="index.html">GemmaNode</a>
+  <div class="nav-links">
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="architecture.html">Architecture</a>
+    <a class="nav-link active" href="resources.html">Resource pool</a>
+    <a class="nav-link" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="status.html">Status</a>
+    <a class="nav-link" href="get-started.html">Get GemmaNode</a>
+    <a class="nav-link" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a class="nav-cta" href="signup.html">Sign up</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="page-hero">
+  <span class="eyebrow">Capabilities</span>
+  <h1>Resource pool</h1>
+  <p>GemmaNode works with a broad, extensible pool of resources. Availability, quotas, and pricing for any third-party resource are set by that provider and can change — nothing here is a permanent guarantee.</p>
+</section>
+<section class="wrap">
+  <div class="grid">
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>Local Compute</h3>
+      <p>Run workloads on your own hardware — private, low-latency execution when available.</p>
+      <ul><li>Your CPU / GPU / RAM</li></ul>
+      <span class="tag tag-local">Local</span>
+    </div>
+    <div class="card">
+      <div class="icon">☁️</div>
+      <h3>Cloud Compute</h3>
+      <p>Draw on compatible remote compute when extra capacity is useful, subject to each platform's own limits.</p>
+      <ul>
+        <li>Camber</li>
+        <li>Kaggle</li>
+        <li>Google Colab</li>
+        <li>Hugging Face</li>
+      </ul>
+      <span class="tag tag-cloud">Cloud</span>
+    </div>
+    <div class="card">
+      <div class="icon">🔌</div>
+      <h3>AI Providers</h3>
+      <p>Use external AI APIs for suitable workloads, respecting each provider's own terms and quotas.</p>
+      <ul>
+        <li>Gemini API</li>
+        <li>OpenRouter</li>
+        <li>Pollinations AI</li>
+      </ul>
+      <span class="tag tag-provider">Provider</span>
+    </div>
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>Autonomous Agents</h3>
+      <p>Multi-step, tool-using execution for tasks that need more than a single model call.</p>
+      <ul>
+        <li>OpenHands</li>
+        <li>OpenClaw</li>
+        <li>Hermes</li>
+      </ul>
+      <span class="tag tag-agent">Agent</span>
+    </div>
+    <div class="card">
+      <div class="icon">🧭</div>
+      <h3>Manual Escalation</h3>
+      <p>Complex or uncertain tasks can optionally be escalated to a stronger model for human-reviewed handling.</p>
+      <ul><li>Claude</li></ul>
+      <span class="tag tag-escalation">Escalation</span>
+    </div>
+  </div>
+  <div class="note-box">
+    <b>Provider independence:</b> resources can be added, removed, or swapped in the pool without changing how you interact with GemmaNode. No single vendor is a hard dependency.
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <span class="eyebrow">Cost &amp; control</span>
+    <div class="section-title">
+      <h2>Built on free &amp; user-controlled resources</h2>
+      <p>GemmaNode is designed to make the most of free tiers, open-weight models, and your own hardware — not to promise unlimited free compute forever.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><h3>Free-tier aware</h3><p>Designed to make good use of free and low-cost resources, while respecting each provider's own limits and policies.</p></div>
+      <div class="feat"><h3>BYOK</h3><p>Bring your own keys where a provider requires one — nothing shared, nothing hardcoded.</p></div>
+      <div class="feat"><h3>No forced subscription</h3><p>The core, self-hosted experience isn't metered by GemmaNode itself.</p></div>
+      <div class="feat"><h3>Your hardware counts</h3><p>Local compute is a first-class resource, not an afterthought — useful even without a dedicated GPU.</p></div>
+      <div class="feat"><h3>Provider limits still apply</h3><p>Free tiers, quotas, and pricing are set by each provider and can change at any time.</p></div>
+      <div class="feat"><h3>No hidden metering</h3><p>You can see which resource handled a task — no silent switch to a paid tier without your setup allowing it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <span class="eyebrow">For developers</span>
+  <div class="section-title">
+    <h2>Built to evolve with the AI ecosystem</h2>
+    <p>GemmaNode's provider and agent boundaries are designed to be swappable, not hardcoded.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat"><h3>New models</h3><p>Additional models can be added to the pool as they become useful.</p></div>
+    <div class="feat"><h3>New AI providers</h3><p>Providers beyond the current set can be integrated over time.</p></div>
+    <div class="feat"><h3>New compute resources</h3><p>Additional local or cloud compute sources can be supported.</p></div>
+    <div class="feat"><h3>New agent frameworks</h3><p>The agent layer isn't limited to what's currently listed.</p></div>
+    <div class="feat"><h3>Open source</h3><p>Fully inspectable code, free to fork, audit, and extend.</p></div>
+    <div class="feat"><h3>No black boxes</h3><p>What's public stays high-level by design — but nothing is hidden about how to contribute.</p></div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+    <a href="signup.html">Sign up</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

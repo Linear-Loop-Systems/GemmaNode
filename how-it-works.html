@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How GemmaNode Works</title>
+<meta name="description" content="The public-facing workflow of GemmaNode, from task submission to result — in six steps.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="How GemmaNode Works">
+<meta property="og:description" content="The public-facing workflow of GemmaNode, from task submission to result — in six steps.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="wrap" id="site-nav">
+  <a class="logo" href="index.html">GemmaNode</a>
+  <div class="nav-links">
+    <a class="nav-link active" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="architecture.html">Architecture</a>
+    <a class="nav-link" href="resources.html">Resource pool</a>
+    <a class="nav-link" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="status.html">Status</a>
+    <a class="nav-link" href="get-started.html">Get GemmaNode</a>
+    <a class="nav-link" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a class="nav-cta" href="signup.html">Sign up</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="page-hero">
+  <span class="eyebrow">Workflow</span>
+  <h1>How it works</h1>
+  <p>At a high level, a task moves through the same general path every time — the specific resource it lands on depends on what the task needs and what's available.</p>
+</section>
+<section class="wrap">
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>You submit a task</h3>
+        <p>Through the web app, desktop client, mobile client, or API/CLI — one place to describe what you need done.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>GemmaNode analyzes the task</h3>
+        <p>The request is reviewed at a high level to understand its general nature — coding, research, generation, analysis, and so on.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Available resources are considered</h3>
+        <p>GemmaNode looks at what's currently available across the resource pool — local hardware, cloud compute, AI providers, and agent frameworks.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Work is assigned to a suitable resource</h3>
+        <p>Based on general factors like capability, availability, and cost. The exact selection logic is internal — this page describes what happens, not how it's computed.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Independent work can run concurrently</h3>
+        <p>When resources allow, multiple agents or parts of a task can execute in parallel rather than strictly one at a time.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Results come back to you</h3>
+        <p>Output is collected, consolidated, and returned through whichever client you started from.</p>
+      </div>
+    </div>
+  </div>
+  <div class="note-box">
+    <b>Difficult or uncertain tasks</b> can optionally be escalated for manual review by a stronger model rather than forced through an automated path that isn't working. This is a deliberate fallback, not the default route for routine work.
+  </div>
+</section>
+</main>
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+    <a href="signup.html">Sign up</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemmaNode Architecture</title>
+<meta name="description" content="The public architecture overview of GemmaNode — how a request flows from user to resource and back.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="GemmaNode Architecture">
+<meta property="og:description" content="The public architecture overview of GemmaNode — how a request flows from user to resource and back.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="wrap" id="site-nav">
+  <a class="logo" href="index.html">GemmaNode</a>
+  <div class="nav-links">
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link active" href="architecture.html">Architecture</a>
+    <a class="nav-link" href="resources.html">Resource pool</a>
+    <a class="nav-link" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="status.html">Status</a>
+    <a class="nav-link" href="get-started.html">Get GemmaNode</a>
+    <a class="nav-link" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a class="nav-cta" href="signup.html">Sign up</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="page-hero">
+  <span class="eyebrow">System design</span>
+  <h1>Architecture overview</h1>
+  <p>The public shape of the system — how a request moves from you to a resource and back. Internal routing logic, scheduling heuristics, and infrastructure details are intentionally left out of this diagram.</p>
+</section>
+<section class="wrap">
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-node accent"><h4>User</h4><span>Web app · Desktop · Mobile · API/CLI</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node pink"><h4>GemmaNode Orchestrator</h4><span>Task analysis &amp; resource evaluation</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node"><h4>Resource Pool</h4><span>Matched against available capacity</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-pool">
+        <div class="flow-node"><h4>Local Compute</h4><span>Your hardware</span></div>
+        <div class="flow-node"><h4>Cloud Compute</h4><span>Remote capacity</span></div>
+        <div class="flow-node"><h4>AI Providers</h4><span>External models</span></div>
+        <div class="flow-node"><h4>Agents</h4><span>Multi-step execution</span></div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node accent"><h4>Execution</h4><span>Task carried out, results collected</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node pink"><h4>Result → You</h4><span>Returned to your originating client</span></div>
+    </div>
+    <div class="escalation-note">
+      <b>Manual escalation:</b> complex, failing, or uncertain tasks can be routed to Claude for review — kept separate from the automated pool, not wired into every step by default.
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+    <a href="signup.html">Sign up</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

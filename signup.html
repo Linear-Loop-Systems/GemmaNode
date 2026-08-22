@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign up — GemmaNode</title>
+<meta name="description" content="Sign up for GemmaNode with GitHub, Google, or email to get your free product key.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="Sign up — GemmaNode">
+<meta property="og:description" content="Sign up for GemmaNode with GitHub, Google, or email to get your free product key.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="wrap" id="site-nav">
+  <a class="logo" href="index.html">GemmaNode</a>
+  <div class="nav-links">
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="architecture.html">Architecture</a>
+    <a class="nav-link" href="resources.html">Resource pool</a>
+    <a class="nav-link" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="status.html">Status</a>
+    <a class="nav-link" href="get-started.html">Get GemmaNode</a>
+    <a class="nav-link" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a class="nav-cta" href="signup.html">Sign up</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="page-hero" style="padding-bottom:8px;">
+  <span class="eyebrow">Account</span>
+  <h1>Sign up for GemmaNode</h1>
+  <p>Connect an account or use email to get your free product key. Keys are used for adoption tracking only — not usage monitoring.</p>
+</section>
+<section class="wrap" style="padding-top:24px;">
+  <div class="auth-wrap">
+    <h2>Create your account</h2>
+    <p>Choose how you'd like to sign up.</p>
+
+    <button class="oauth-btn github" id="githubSignup" type="button">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      Continue with GitHub
+    </button>
+
+    <button class="oauth-btn google" id="googleSignup" type="button">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.85 2.09-1.8 2.73v2.27h2.92c1.71-1.57 2.68-3.88 2.68-6.64Z"/>
+        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.27c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.94v2.34A9 9 0 0 0 9 18Z"/>
+        <path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.96H.94A9 9 0 0 0 0 9c0 1.45.35 2.83.94 4.04l3.03-2.34Z"/>
+        <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .94 4.96l3.03 2.34C4.68 5.16 6.66 3.58 9 3.58Z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="auth-divider">or use email</div>
+
+    <form class="key-form" id="keyForm" style="flex-direction:column;">
+      <input type="email" id="keyEmail" placeholder="you@example.com" required autocomplete="email" style="width:100%;">
+      <button type="submit" id="keySubmit" style="width:100%;">Get product key</button>
+    </form>
+    <div class="key-status" id="keyStatus"></div>
+    <div class="key-result" id="keyResult">
+      <span id="keyValue">GNODE-XXXX-XXXX-XXXX</span>
+      <button class="copy-btn" id="keyCopy">Copy</button>
+    </div>
+
+    <p class="auth-note">By signing up you agree this is a hobby/open-source project provided as-is. GitHub and Google sign-in require OAuth app credentials to be configured — see placeholders in the page source.</p>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+    <a href="signup.html">Sign up</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

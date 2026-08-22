@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemmaNode Privacy & Control</title>
+<meta name="description" content="What stays on your machine and what doesn't when GemmaNode routes a task.">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:title" content="GemmaNode Privacy & Control">
+<meta property="og:description" content="What stays on your machine and what doesn't when GemmaNode routes a task.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="wrap" id="site-nav">
+  <a class="logo" href="index.html">GemmaNode</a>
+  <div class="nav-links">
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="architecture.html">Architecture</a>
+    <a class="nav-link" href="resources.html">Resource pool</a>
+    <a class="nav-link active" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="status.html">Status</a>
+    <a class="nav-link" href="get-started.html">Get GemmaNode</a>
+    <a class="nav-link" href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a class="nav-cta" href="signup.html">Sign up</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="page-hero">
+  <span class="eyebrow">Privacy &amp; control</span>
+  <h1>Local by default, external when you choose</h1>
+  <p>What stays on your machine and what doesn't depends on which resource actually handles a task.</p>
+</section>
+<section class="wrap">
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+    <div class="card">
+      <div class="icon">🔒</div>
+      <h3>Local resources</h3>
+      <p>When a task runs on your own hardware, your code and files can stay on your machine according to how you've configured GemmaNode.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>External providers</h3>
+      <p>When a task is sent to an external AI provider or cloud resource, the relevant data leaves your machine and is subject to that provider's own service and terms.</p>
+    </div>
+  </div>
+  <div class="note-box">
+    We don't promise privacy guarantees beyond what the actual configuration provides. If a task is routed externally, treat it the same way you would treat sending that data directly to that provider.
+  </div>
+</section>
+</main>
+<footer>
+  <div class="foot-links">
+    <a href="https://github.com/Linear-Loop-Systems/GemmaNode">GitHub</a>
+    <a href="YOUR_LICENSE_URL">License: Apache 2.0</a>
+    <a href="YOUR_DOCS_URL">Docs</a>
+    <a href="signup.html">Sign up</a>
+  </div>
+  <div class="credit">Built by <span>Linear Loop Systems</span> (sudohecker12 / Vighnesh Hariharan)</div>
+  <p class="disclosure">GemmaNode is an independent open-source project. Provider names shown (Gemini API, OpenRouter, Pollinations AI, Camber, Kaggle, Google Colab, Hugging Face, OpenHands, OpenClaw, Hermes, Claude) refer to their own respective services and are not affiliated with or endorsed by this project. Availability, pricing, and quotas are determined by each provider and may change.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
